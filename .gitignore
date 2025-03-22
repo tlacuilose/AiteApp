@@ -1,0 +1,50 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode
+build/
+DerivedData/
+*.xcworkspace/
+xcuserdata/
+*.xccheckout
+*.xcscmblueprint
+*.xcodeproj/project.xcworkspace/
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# Swift Playgrounds
+playground.xcworkspace/
+timeline.xctimeline
+playgroundbook/
+
+# Carthage & CocoaPods (if not using them, ignore)
+Carthage/Checkouts
+Carthage/Build
+Pods/
+Podfile.lock
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# Archive files
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# User-specific settings
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+
+# Environment & Secrets (if applicable)
+.env
+*.keychain
+
