@@ -45,14 +45,11 @@ struct NewGoalEditor: View {
                             set: { (newType: EditableTargets) in
                                 switch newType {
                                 case .money:
-                                    newGoal = Goal(
-                                        name: newGoal.name, target: .money(0))
+                                    newGoal = Goal(name: newGoal.name, target: .money(0))
                                 case .timeframe:
                                     newGoal = Goal(
                                         name: newGoal.name,
-                                        target: .timeframe(
-                                            days: 0, weeks: 0, months: 0,
-                                            years: 0))
+                                        target: .timeframe(days: 0, weeks: 0, months: 0, years: 0))
 
                                 }
                             }
@@ -79,77 +76,64 @@ struct NewGoalEditor: View {
                             value: Binding(
                                 get: { amount },
                                 set: { newAmount in
-                                    newGoal = Goal(
-                                        name: newGoal.name,
-                                        target: .money(newAmount))
+                                    newGoal = Goal(name: newGoal.name, target: .money(newAmount))
                                 }
                             ),
-                            format: .currency(
-                                code: Locale.current.currency?.identifier
-                                    ?? "USD")
+                            format: .currency(code: Locale.current.currency?.identifier ?? "USD")
                         )
                         .keyboardType(.decimalPad)
                     case .timeframe(let days, let weeks, let months, let years):
-                        TextField(
-                            "Days",
+                        NumberField(
+                            title: "Days",
                             value: Binding(
                                 get: { days },
                                 set: { newDays in
                                     newGoal = Goal(
                                         name: newGoal.name,
                                         target: .timeframe(
-                                            days: newDays, weeks: weeks,
-                                            months: months, years: years))
-                                }
-                            ), format: .number
+                                            days: newDays, weeks: weeks, months: months,
+                                            years: years))
+                                })
                         )
-                        .keyboardType(.numberPad)
 
-                        TextField(
-                            "Weeks",
+                        NumberField(
+                            title: "Weeks",
                             value: Binding(
                                 get: { weeks },
                                 set: { newWeeks in
                                     newGoal = Goal(
                                         name: newGoal.name,
                                         target: .timeframe(
-                                            days: days, weeks: newWeeks,
-                                            months: months, years: years))
-                                }
-                            ), format: .number
+                                            days: days, weeks: newWeeks, months: months,
+                                            years: years))
+                                })
                         )
-                        .keyboardType(.numberPad)
 
-                        TextField(
-                            "Months",
+                        NumberField(
+                            title: "Months",
                             value: Binding(
                                 get: { months },
                                 set: { newMonths in
                                     newGoal = Goal(
                                         name: newGoal.name,
                                         target: .timeframe(
-                                            days: days, weeks: weeks,
-                                            months: newMonths, years: years))
-                                }
-                            ), format: .number
+                                            days: days, weeks: weeks, months: newMonths,
+                                            years: years))
+                                })
                         )
-                        .keyboardType(.numberPad)
 
-                        TextField(
-                            "Years",
+                        NumberField(
+                            title: "Years",
                             value: Binding(
-                                get: { years },
+                                get: { days },
                                 set: { newYears in
                                     newGoal = Goal(
                                         name: newGoal.name,
                                         target: .timeframe(
-                                            days: days, weeks: weeks,
-                                            months: months, years: newYears))
-                                }
-                            ), format: .number
+                                            days: days, weeks: weeks, months: months,
+                                            years: newYears))
+                                })
                         )
-                        .keyboardType(.numberPad)
-
                     }
                 }
             }

@@ -16,7 +16,7 @@ struct Goal: Codable, Equatable {
     let id: UUID
     let name: String
     let target: GoalTarget
-    
+
     init(name: String, target: GoalTarget) {
         self.id = UUID()
         self.name = name

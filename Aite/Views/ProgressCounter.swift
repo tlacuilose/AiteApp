@@ -9,11 +9,13 @@ import SwiftUI
 struct ProgressCounter: View {
     let progress: String
     let savedAmount: Double
-    
+
     var body: some View {
         List {
             Text(progress)
-            Text(savedAmount.formatted(.currency(code: Locale.current.currency?.identifier ?? "USD")))
+            Text(
+                savedAmount.formatted(.currency(code: Locale.current.currency?.identifier ?? "USD"))
+            )
         }
     }
 }

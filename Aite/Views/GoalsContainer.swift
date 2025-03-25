@@ -9,7 +9,7 @@ import SwiftUI
 struct GoalsContainer: View {
     @StateObject var vm = GoalsViewModel()
     @State private var editing = false
-    
+
     var body: some View {
         NavigationStack {
             VStack {
