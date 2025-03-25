@@ -211,6 +211,16 @@
         }
       }
     },
+    "Add" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir"
+          }
+        }
+      }
+    },
     "Am I There Ever?" : {
       "localizations" : {
         "es" : {
@@ -251,6 +261,16 @@
         }
       }
     },
+    "Days" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Días"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "es" : {
@@ -271,12 +291,52 @@
         }
       }
     },
+    "Goal Name" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meta"
+          }
+        }
+      }
+    },
     "Last Activity" : {
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Última Actividad"
+          }
+        }
+      }
+    },
+    "Money" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantidad"
+          }
+        }
+      }
+    },
+    "Months" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meses"
+          }
+        }
+      }
+    },
+    "New Goal" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nueva Meta"
           }
         }
       }
@@ -291,12 +351,62 @@
         }
       }
     },
+    "Target Amount" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cantidad Esperada"
+          }
+        }
+      }
+    },
+    "Target Type" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo de Meta"
+          }
+        }
+      }
+    },
     "The activity date can't be in the future" : {
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "La actividad no puede ser en el futuro"
+          }
+        }
+      }
+    },
+    "Timeframe" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiempo"
+          }
+        }
+      }
+    },
+    "Weeks" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semanas"
+          }
+        }
+      }
+    },
+    "Years" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Años"
           }
         }
       }
