@@ -25,6 +25,7 @@ class GoalsService: GoalsServiceProtocol {
     
     enum DefaultsKeys {
         static let lastActivityDate = "lastActivityDate"
+        static let costPerMonth = "costPerMonth"
         static let goals = "goals"
     }
     
@@ -42,6 +43,15 @@ class GoalsService: GoalsServiceProtocol {
             throw TimespaceError.futureActivity
         }
         defaults.set(date, forKey: DefaultsKeys.lastActivityDate)
+    }
+    
+    // $40,000
+    func getCostPerMonth() -> Double? {
+        return defaults.object(forKey: DefaultsKeys.costPerMonth) as? Double
+    }
+    
+    func setCostPerMonth(_ cost: Double) {
+        defaults.set(cost, forKey: DefaultsKeys.costPerMonth)
     }
     
     func getAllGoals() -> [Goal] {

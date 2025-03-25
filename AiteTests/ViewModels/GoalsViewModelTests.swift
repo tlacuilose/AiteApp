@@ -14,19 +14,15 @@ import Foundation
 @Suite struct GoalsViewModelTests {
     let fakeGoalsService = FakeGoalsService()
     let viewModel: GoalsViewModel
-    let oneHourAgo = Calendar.current.date(byAdding: .hour, value: -1, to: Date())!
+    let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
 
     init() {
-        try! fakeGoalsService.setLastActivityDate(oneHourAgo)
+        fakeGoalsService.clearThrowables()
+        fakeGoalsService.clearLastActivityDate()
+        fakeGoalsService.clearCostPerMonth()
+        
+        try! fakeGoalsService.setLastActivityDate(oneMonthAgo)
         viewModel = GoalsViewModel(goalsService: fakeGoalsService)
-    }
-    
-    @Test func getLastActivityDate_whenInitialized_isNotNil() {
-        #expect(viewModel.lastActivityDate != nil)
-    }
-
-    @Test func getProgress_whenInitialized_returnsNotEmpty() {
-        #expect(!viewModel.progress.isEmpty)
     }
     
     @Test func updateLastActivityDate_whenInThePast_updatesActivityAndProgress() {
@@ -48,18 +44,44 @@ import Foundation
         
         fakeGoalsService.clearThrowables()
     }
+    
+    @Test func didSetCostPerMonth_whenCalled_updatesCost() {
+        let amount = 100.0
+        viewModel.costPerMonth = amount
+        
+        #expect(fakeGoalsService.getCostPerMonth() == amount)
+        #expect(viewModel.savedAmount/amount > 0.90)
+    }
 }
 
 @Suite struct GoalsViewModelInitTests {
     let fakeGoalsService = FakeGoalsService()
     
-    @Test func loadProgress_whenNoActivityDate_returnsNoActivityMessage() {
+    @Test func init_whenNoDefaultsProvided_returnsNils() {
         fakeGoalsService.clearLastActivityDate()
+        fakeGoalsService.clearCostPerMonth()
+        
         let viewModel = GoalsViewModel(goalsService: fakeGoalsService)
         #expect(viewModel.lastActivityDate == nil)
+        #expect(viewModel.costPerMonth == 0.0)
         #expect(viewModel.progress == String(localized: "No activity recorded"))
     }
     
+    @Test func init_whenDefaultsProvided_returnsDefaults() {
+        let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
+        let costPerMonth = 100.0
+        
+        try! fakeGoalsService.setLastActivityDate(oneMonthAgo)
+        fakeGoalsService.setCostPerMonth(costPerMonth)
+        
+        let viewModel = GoalsViewModel(goalsService: fakeGoalsService)
+        #expect(viewModel.lastActivityDate == oneMonthAgo)
+        #expect(viewModel.costPerMonth == 100)
+        #expect(viewModel.progress == "1 Month")
+        // Each month will have a difference, worse is February at 10% diff
+        #expect(viewModel.savedAmount/costPerMonth > 0.90)
+    }
+
     @Test func loadProgress_whenActivityDateIsToday_returnsZeroHours() {
         let now = Date()
         try! fakeGoalsService.setLastActivityDate(now)

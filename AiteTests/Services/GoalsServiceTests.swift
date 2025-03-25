@@ -49,6 +49,29 @@ import Foundation
         }
     }
 
+    @Test func getCostPerMonth_whenNoValueExists_returnsNil() {
+        let result = goalsService.getCostPerMonth()
+        #expect(result == nil)
+    }
+    
+    @Test func getCostPerMonth_whenValueExists_returnsValue() {
+        let cost = 100.0
+        fakeDefaults.set(cost, forKey: GoalsService.DefaultsKeys.costPerMonth)
+        
+        let result = goalsService.getCostPerMonth()
+        #expect(result == cost)
+        fakeDefaults.clearStore()
+    }
+    
+    @Test func setCostPerMonth_setsCostInDefaults() {
+        let cost = 150.0
+        goalsService.setCostPerMonth(cost)
+        
+        let stored = fakeDefaults.object(forKey: GoalsService.DefaultsKeys.costPerMonth) as? Double
+        #expect(stored == cost)
+        fakeDefaults.clearStore()
+    }
+
     @Test func getAllGoals_whenNoGoalsExist_returnsEmptyArray() {
         let goals = goalsService.getAllGoals()
         #expect(goals.isEmpty)

@@ -14,11 +14,15 @@ struct GoalsContainer: View {
         NavigationStack {
             VStack {
                 if !editing {
-                    ProgressCounter(progress: vm.progress)
+                    ProgressCounter(
+                        progress: vm.progress,
+                        savedAmount: vm.savedAmount
+                    )
                 } else {
-                    LastActivityPicker()
+                    VariablesEditor()
                 }
             }
+            .navigationTitle("Am I There Ever?")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Toggle(isOn: $editing) {

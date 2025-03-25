@@ -12,9 +12,17 @@ class GoalsViewModel: ObservableObject {
     @Published var lastActivityDate: Date? {
         didSet {
             updateProgress()
+            updateSavedAmount()
+        }
+    }
+    @Published var costPerMonth: Double = 0.0 {
+        didSet {
+            goalsService.setCostPerMonth(costPerMonth)
+            updateSavedAmount()
         }
     }
     @Published var progress: String = ""
+    @Published var savedAmount: Double = 0.0
     
     init(goalsService: GoalsServiceProtocol = GoalsService.shared) {
         self.goalsService = goalsService
@@ -22,8 +30,15 @@ class GoalsViewModel: ObservableObject {
         loadData()
     }
     
+    func updateLastActivityDate(_ date: Date) throws {
+        try goalsService.setLastActivityDate(date)
+        
+        lastActivityDate = date
+    }
+
     private func loadData() {
         lastActivityDate = goalsService.getLastActivityDate()
+        costPerMonth = goalsService.getCostPerMonth() ?? 0.0
     }
     
     private func updateProgress() {
@@ -58,9 +73,19 @@ class GoalsViewModel: ObservableObject {
         progress = progressParts.joined(separator: " ")
     }
     
-    func updateLastActivityDate(_ date: Date) throws {
-        try goalsService.setLastActivityDate(date)
+    private func updateSavedAmount() {
+        guard let lastActivity = lastActivityDate else {
+            savedAmount = 0.0
+            return
+        }
         
-        lastActivityDate = date
+        let now = Date()
+        let timeInterval = now.timeIntervalSince(lastActivity)
+        let daysInMonth = 30.44 // Average days in a month
+        let secondsInMonth = daysInMonth * 24 * 60 * 60
+        
+        let monthsPassed = timeInterval / secondsInMonth
+        savedAmount = costPerMonth * monthsPassed
     }
+
 }

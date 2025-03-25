@@ -14,6 +14,7 @@ enum FakeGoalsServiceError: Error {
 
 class FakeGoalsService: GoalsServiceProtocol {
     private var lastActivityDate: Date?
+    private var costPerMonth: Double?
     private var shouldThrow: Bool = false
     
     func setLastActivityDate(_ date: Date) throws {
@@ -26,9 +27,21 @@ class FakeGoalsService: GoalsServiceProtocol {
     func getLastActivityDate() -> Date? {
         return lastActivityDate
     }
-    
+
     func clearLastActivityDate() {
         lastActivityDate = nil
+    }
+
+    func getCostPerMonth() -> Double? {
+        return costPerMonth
+    }
+    
+    func setCostPerMonth(_ cost: Double) {
+        costPerMonth = cost
+    }
+    
+    func clearCostPerMonth() {
+        costPerMonth = nil
     }
     
     func enableThrowables() {

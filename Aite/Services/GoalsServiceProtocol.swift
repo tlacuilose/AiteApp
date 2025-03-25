@@ -10,6 +10,8 @@ import Foundation
 protocol GoalsServiceProtocol {
     func getLastActivityDate() -> Date?
     func setLastActivityDate(_ date: Date) throws
+    func getCostPerMonth() -> Double?
+    func setCostPerMonth(_ cost: Double)
     func getAllGoals() -> [Goal]
     func addGoal(_ goal: Goal)
     func removeGoal(_ goal: Goal)

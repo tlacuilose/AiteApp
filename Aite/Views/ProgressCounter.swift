@@ -8,12 +8,19 @@ import SwiftUI
 
 struct ProgressCounter: View {
     let progress: String
+    let savedAmount: Double
     
     var body: some View {
-        Text(progress)
+        List {
+            Text(progress)
+            Text(savedAmount.formatted(.currency(code: Locale.current.currency?.identifier ?? "USD")))
+        }
     }
 }
 
 #Preview("English") {
-    ProgressCounter(progress: String(localized: "1 Day 2 Hours"))
+    ProgressCounter(
+        progress: String(localized: "1 Day 2 Hours"),
+        savedAmount: 500.0
+    )
 }
