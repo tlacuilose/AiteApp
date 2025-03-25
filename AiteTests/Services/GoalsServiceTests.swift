@@ -1,3 +1,11 @@
+//
+//  GoalsServiceTests.swift
+//  Aite
+//
+//  Created by Jose Tlacuilo on 23/03/25.
+//
+
+import Foundation
 import Testing
 import Foundation
 @testable import Aite
@@ -26,13 +34,21 @@ import Foundation
     
     @Test func setLastActivityDate_setsDateInDefaults() {
         let now = Date()
-        goalsService.setLastActivityDate(now)
+        try! goalsService.setLastActivityDate(now)
         
         let stored = fakeDefaults.object(forKey: GoalsService.DefaultsKeys.lastActivityDate) as? Date
         #expect(stored == now)
         fakeDefaults.clearStore()
     }
     
+    @Test func setLastActivityDate_throwsError_whenSettingAFutureDate() {
+        let oneHourFromNow = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
+        
+        #expect(throws: TimespaceError.self) {
+            try goalsService.setLastActivityDate(oneHourFromNow)
+        }
+    }
+
     @Test func getAllGoals_whenNoGoalsExist_returnsEmptyArray() {
         let goals = goalsService.getAllGoals()
         #expect(goals.isEmpty)

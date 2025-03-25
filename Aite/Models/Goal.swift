@@ -1,3 +1,10 @@
+//
+//  Goal.swift
+//  Aite
+//
+//  Created by Jose Tlacuilo on 23/03/25.
+//
+
 import Foundation
 
 enum GoalTarget: Codable, Equatable {

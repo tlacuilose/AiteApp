@@ -1,6 +1,26 @@
+//
+//  GoalsService.swift
+//  Aite
+//
+//  Created by Jose Tlacuilo on 23/03/25.
+//
+
 import Foundation
 
+enum TimespaceError: Error, LocalizedError {
+    case futureActivity
+    
+    var errorDescription: String? {
+        switch self {
+        case.futureActivity:
+            return String(localized: "The activity date can't be in the future")
+        }
+    }
+}
+
 class GoalsService: GoalsServiceProtocol {
+    static let shared = GoalsService()
+    
     private let defaults: UserDefaults
     
     enum DefaultsKeys {
@@ -12,11 +32,15 @@ class GoalsService: GoalsServiceProtocol {
         self.defaults = defaults
     }
     
+    // 23 May 2025 - 2:35am
     func getLastActivityDate() -> Date? {
         return defaults.object(forKey: DefaultsKeys.lastActivityDate) as? Date
     }
     
-    func setLastActivityDate(_ date: Date) {
+    func setLastActivityDate(_ date: Date) throws {
+        guard date <= Date() else {
+            throw TimespaceError.futureActivity
+        }
         defaults.set(date, forKey: DefaultsKeys.lastActivityDate)
     }
     

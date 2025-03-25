@@ -11,7 +11,7 @@ import SwiftUI
 struct AiteApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GoalsContainer()
         }
     }
 }

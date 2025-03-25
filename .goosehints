@@ -1,0 +1,7 @@
+Rememeber that everytime you create a new swift file, you should but the following comment at the very top
+//
+//  [file-name].swift
+//  Aite
+//
+//  Created by Jose Tlacuilo on [dd/mm/yy].
+//

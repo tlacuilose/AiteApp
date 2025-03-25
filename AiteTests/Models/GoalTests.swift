@@ -1,3 +1,11 @@
+//
+//  GoalsTests.swift
+//  Aite
+//
+//  Created by Jose Tlacuilo on 23/03/25.
+//
+
+import Foundation
 import Testing
 import Foundation
 @testable import Aite
