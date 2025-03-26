@@ -301,6 +301,16 @@
         }
       }
     },
+    "Error" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
     "Goal Name" : {
       "localizations" : {
         "es" : {
@@ -361,6 +371,16 @@
         }
       }
     },
+    "Ok" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceptar"
+          }
+        }
+      }
+    },
     "Target Amount" : {
       "localizations" : {
         "es" : {
@@ -387,6 +407,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La actividad no puede ser en el futuro"
+          }
+        }
+      }
+    },
+    "The goal is not codable" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La meta no se puede codificar"
           }
         }
       }

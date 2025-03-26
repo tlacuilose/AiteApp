@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "BDA66568-B84E-4806-9FB0-6A3B52578853",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Aite.xcodeproj",
+        "identifier" : "0280B9FE2D8F816A0023E473",
+        "name" : "AiteTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Aite.xcodeproj",
+        "identifier" : "0280BA082D8F816A0023E473",
+        "name" : "AiteUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

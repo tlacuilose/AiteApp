@@ -13,7 +13,7 @@ protocol GoalsServiceProtocol {
     func getCostPerMonth() -> Double?
     func setCostPerMonth(_ cost: Double)
     func getAllGoals() -> [Goal]
-    func addGoal(_ goal: Goal)
+    func addGoal(_ goal: Goal) throws
     func removeGoal(_ goal: Goal)
     func removeAllGoals()
 }

@@ -52,10 +52,33 @@ import Testing
         #expect(fakeGoalsService.getCostPerMonth() == amount)
         #expect(viewModel.savedAmount / amount > 0.90)
     }
+
+    @Test func addGoal_whenValidGoal_updatesGoals() {
+        fakeGoalsService.removeAllGoals()
+
+        let fakeGoal = Goal(name: "Test Goal", target: .money(100))
+        try! viewModel.addGoal(fakeGoal)
+
+        #expect(viewModel.goals.count == 1)
+        #expect(viewModel.goals.first == fakeGoal)
+    }
+
+    @Test func addGoal_whenServiceThrows_doesNotAddGoal() {
+        fakeGoalsService.enableThrowables()
+        fakeGoalsService.removeAllGoals()
+
+        let fakeGoal = Goal(name: "Test Goal", target: .money(100))
+        #expect(throws: (any Error).self) {
+            try viewModel.addGoal(fakeGoal)
+        }
+
+        #expect(viewModel.goals.isEmpty)
+    }
 }
 
 @Suite struct GoalsViewModelInitTests {
     let fakeGoalsService = FakeGoalsService()
+    let fakeGoal = Goal(name: "Test Goal", target: .money(100))
 
     @Test func init_whenNoDefaultsProvided_returnsNils() {
         fakeGoalsService.clearLastActivityDate()
@@ -64,6 +87,7 @@ import Testing
         let viewModel = GoalsViewModel(goalsService: fakeGoalsService)
         #expect(viewModel.lastActivityDate == nil)
         #expect(viewModel.costPerMonth == 0.0)
+        #expect(viewModel.goals.isEmpty)
         #expect(viewModel.progress == String(localized: "No activity recorded"))
     }
 
@@ -73,10 +97,13 @@ import Testing
 
         try! fakeGoalsService.setLastActivityDate(oneMonthAgo)
         fakeGoalsService.setCostPerMonth(costPerMonth)
+        try! fakeGoalsService.addGoal(fakeGoal)
 
         let viewModel = GoalsViewModel(goalsService: fakeGoalsService)
         #expect(viewModel.lastActivityDate == oneMonthAgo)
         #expect(viewModel.costPerMonth == 100)
+        #expect(viewModel.goals.count == 1)
+        #expect(viewModel.goals.first == fakeGoal)
         #expect(viewModel.progress == "1 Month")
         // Each month will have a difference, worse is February at 10% diff
         #expect(viewModel.savedAmount / costPerMonth > 0.90)

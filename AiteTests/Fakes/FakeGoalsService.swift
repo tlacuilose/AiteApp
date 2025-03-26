@@ -17,6 +17,7 @@ class FakeGoalsService: GoalsServiceProtocol {
     private var lastActivityDate: Date?
     private var costPerMonth: Double?
     private var shouldThrow: Bool = false
+    private var goals: [Goal] = []
 
     func setLastActivityDate(_ date: Date) throws {
         if shouldThrow {
@@ -54,12 +55,21 @@ class FakeGoalsService: GoalsServiceProtocol {
     }
 
     func getAllGoals() -> [Goal] {
-        return []
+        return goals
     }
 
-    func addGoal(_ goal: Goal) {}
+    func addGoal(_ goal: Goal) throws {
+        if shouldThrow {
+            throw FakeGoalsServiceError.fake
+        }
+        goals.append(goal)
+    }
 
-    func removeGoal(_ goal: Goal) {}
+    func removeGoal(_ goal: Goal) {
+        goals.removeAll { $0.id == goal.id }
+    }
 
-    func removeAllGoals() {}
+    func removeAllGoals() {
+        goals.removeAll()
+    }
 }

@@ -23,6 +23,7 @@ class GoalsViewModel: ObservableObject {
     }
     @Published var progress: String = ""
     @Published var savedAmount: Double = 0.0
+    @Published var goals: [Goal] = []
 
     init(goalsService: GoalsServiceProtocol = GoalsService.shared) {
         self.goalsService = goalsService
@@ -35,10 +36,17 @@ class GoalsViewModel: ObservableObject {
 
         lastActivityDate = date
     }
+    
+    func addGoal(_ goal: Goal) throws {
+        try goalsService.addGoal(goal)
+        
+        loadData()
+    }
 
     private func loadData() {
         lastActivityDate = goalsService.getLastActivityDate()
         costPerMonth = goalsService.getCostPerMonth() ?? 0.0
+        goals = goalsService.getAllGoals()
     }
 
     private func updateProgress() {

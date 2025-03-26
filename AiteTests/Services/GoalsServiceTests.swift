@@ -96,7 +96,7 @@ import Testing
 
     @Test func addGoal_addsTimeframeGoalToDefaults() {
         let goal = Goal(name: "Exercise Goal", target: .timeframe(days: 30))
-        goalsService.addGoal(goal)
+        try! goalsService.addGoal(goal)
 
         let goals = goalsService.getAllGoals()
         #expect(goals.count == 1)
@@ -110,7 +110,7 @@ import Testing
 
     @Test func addGoal_addsMoneyGoalToDefaults() {
         let goal = Goal(name: "Savings Goal", target: .money(1000.0))
-        goalsService.addGoal(goal)
+        try! goalsService.addGoal(goal)
 
         let goals = goalsService.getAllGoals()
         #expect(goals.count == 1)
@@ -124,7 +124,7 @@ import Testing
 
     @Test func removeGoal_removesGoalFromDefaults() {
         let goal = Goal(name: "Exercise Goal", target: .timeframe(weeks: 4))
-        goalsService.addGoal(goal)
+        try! goalsService.addGoal(goal)
 
         goalsService.removeGoal(goal)
 
@@ -135,8 +135,8 @@ import Testing
     @Test func removeGoal_whenMultipleGoals_removesOnlySpecifiedGoal() {
         let goal1 = Goal(name: "Exercise Goal", target: .timeframe(weeks: 4))
         let goal2 = Goal(name: "Savings Goal", target: .money(500.0))
-        goalsService.addGoal(goal1)
-        goalsService.addGoal(goal2)
+        try! goalsService.addGoal(goal1)
+        try! goalsService.addGoal(goal2)
 
         goalsService.removeGoal(goal1)
 
@@ -153,8 +153,8 @@ import Testing
     @Test func removeAllGoals_removesAllGoalsFromDefaults() {
         let goal1 = Goal(name: "Exercise Goal", target: .timeframe(months: 3))
         let goal2 = Goal(name: "Savings Goal", target: .money(2000.0))
-        goalsService.addGoal(goal1)
-        goalsService.addGoal(goal2)
+        try! goalsService.addGoal(goal1)
+        try! goalsService.addGoal(goal2)
 
         goalsService.removeAllGoals()
 

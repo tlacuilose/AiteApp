@@ -18,6 +18,17 @@ enum TimespaceError: Error, LocalizedError {
     }
 }
 
+enum CodableError: Error, LocalizedError {
+    case goalNotCodable
+    
+    var errorDescription: String? {
+        switch self {
+        case .goalNotCodable:
+            return String(localized: "The goal is not codable")
+        }
+    }
+}
+
 class GoalsService: GoalsServiceProtocol {
     static let shared = GoalsService()
 
@@ -63,11 +74,14 @@ class GoalsService: GoalsServiceProtocol {
         return goals
     }
 
-    func addGoal(_ goal: Goal) {
+    func addGoal(_ goal: Goal) throws {
         var goals = getAllGoals()
         goals.append(goal)
-        if let encoded = try? JSONEncoder().encode(goals) {
+        do {
+            let encoded = try JSONEncoder().encode(goals)
             defaults.set(encoded, forKey: DefaultsKeys.goals)
+        } catch {
+            throw CodableError.goalNotCodable
         }
     }
 

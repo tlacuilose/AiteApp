@@ -27,6 +27,7 @@
 		0280B9EF2D8F81690023E473 /* Aite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Aite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0280B9FF2D8F816A0023E473 /* AiteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AiteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0280BA092D8F816A0023E473 /* AiteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AiteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		02FE7AB42D93995A00884A8B /* Aite.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Aite.xctestplan; path = AiteTests/Aite.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +76,7 @@
 		0280B9E62D8F81690023E473 = {
 			isa = PBXGroup;
 			children = (
+				02FE7AB42D93995A00884A8B /* Aite.xctestplan */,
 				0280B9F12D8F81690023E473 /* Aite */,
 				0280BA022D8F816A0023E473 /* AiteTests */,
 				0280BA0C2D8F816A0023E473 /* AiteUITests */,

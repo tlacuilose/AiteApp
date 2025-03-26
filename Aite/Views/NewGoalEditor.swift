@@ -7,7 +7,11 @@
 import SwiftUI
 
 struct NewGoalEditor: View {
+    @EnvironmentObject private var vm: GoalsViewModel
+
     @State private var newGoal = Goal(name: "", target: .money(0))
+    @State private var errorMessage: String? = nil
+    @State private var didErrored = false
 
     enum EditableTargets {
         case money
@@ -24,11 +28,17 @@ struct NewGoalEditor: View {
                             Spacer()
                             Button(action: {
                                 guard !newGoal.name.isEmpty else { return }
-                                // viewModel.addGoal(newGoal)
+                                do {
+                                    try vm.addGoal(newGoal)
+                                } catch {
+                                    errorMessage = error.localizedDescription
+                                    didErrored = true
+                                }
                             }) {
                                 Text("Add").textCase(nil)
                             }
                             .disabled(newGoal.name.isEmpty)
+                            // Add an animation to fill in the button and fillout if done :D
                         }
                 ) {
                     Picker(
@@ -136,6 +146,14 @@ struct NewGoalEditor: View {
                         )
                     }
                 }
+                .alert(
+                    "Error", isPresented: $didErrored,
+                    actions: {
+                        Button("Ok", role: .cancel) {}
+                    },
+                    message: {
+                        Text(errorMessage ?? "Unknown error")
+                    })
             }
         }
     }
@@ -143,4 +161,47 @@ struct NewGoalEditor: View {
 
 #Preview {
     NewGoalEditor()
+        .environmentObject(GoalsViewModel(goalsService: FakeErrorGoalsService()))
+}
+
+enum FakeGoalsServiceError: Error, LocalizedError {
+    case goalNotCodable
+
+    var errorDescription: String? {
+        switch self {
+        case .goalNotCodable:
+            return String(localized: "The goal is not codable")
+        }
+    }
+}
+
+class FakeErrorGoalsService: GoalsServiceProtocol {
+    private var goals: [Goal] = []
+
+    func setLastActivityDate(_ date: Date) throws {}
+
+    func getLastActivityDate() -> Date? { return nil }
+
+    func clearLastActivityDate() {}
+
+    func getCostPerMonth() -> Double? { return nil }
+
+    func setCostPerMonth(_ cost: Double) {}
+
+    func clearCostPerMonth() {}
+
+    func getAllGoals() -> [Goal] {
+        return goals
+    }
+
+    func addGoal(_ goal: Goal) throws {
+        if goal.name == "Error" {
+            throw FakeGoalsServiceError.goalNotCodable
+        }
+        goals.append(goal)
+    }
+
+    func removeGoal(_ goal: Goal) {}
+
+    func removeAllGoals() {}
 }
