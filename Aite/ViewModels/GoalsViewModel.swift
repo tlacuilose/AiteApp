@@ -36,10 +36,22 @@ class GoalsViewModel: ObservableObject {
 
         lastActivityDate = date
     }
-    
+
     func addGoal(_ goal: Goal) throws {
         try goalsService.addGoal(goal)
-        
+
+        loadData()
+    }
+
+    func removeGoal(_ goal: Goal) throws {
+        try goalsService.removeGoal(goal)
+
+        loadData()
+    }
+
+    func removeAllGoals() {
+        goalsService.removeAllGoals()
+
         loadData()
     }
 

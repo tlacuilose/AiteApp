@@ -14,6 +14,6 @@ protocol GoalsServiceProtocol {
     func setCostPerMonth(_ cost: Double)
     func getAllGoals() -> [Goal]
     func addGoal(_ goal: Goal) throws
-    func removeGoal(_ goal: Goal)
+    func removeGoal(_ goal: Goal) throws
     func removeAllGoals()
 }

@@ -11,6 +11,7 @@ struct GoalsForm: View {
         Form {
             VariablesEditor()
             NewGoalEditor()
+            GoalsEditor()
         }
     }
 }

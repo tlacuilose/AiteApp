@@ -126,7 +126,7 @@ import Testing
         let goal = Goal(name: "Exercise Goal", target: .timeframe(weeks: 4))
         try! goalsService.addGoal(goal)
 
-        goalsService.removeGoal(goal)
+        try! goalsService.removeGoal(goal)
 
         let goals = goalsService.getAllGoals()
         #expect(goals.isEmpty)
@@ -138,7 +138,7 @@ import Testing
         try! goalsService.addGoal(goal1)
         try! goalsService.addGoal(goal2)
 
-        goalsService.removeGoal(goal1)
+        try! goalsService.removeGoal(goal1)
 
         let goals = goalsService.getAllGoals()
         #expect(goals.count == 1)

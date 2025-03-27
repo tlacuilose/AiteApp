@@ -164,48 +164,7 @@ struct NewGoalEditor: View {
 #Preview {
     Form {
         NewGoalEditor()
-            .environmentObject(GoalsViewModel(goalsService: FakeErrorGoalsService()))
+            .environmentObject(GoalsViewModel(goalsService: FakeGoalsServiceForUI()))
     }
 }
 
-enum FakeGoalsServiceError: Error, LocalizedError {
-    case goalNotCodable
-
-    var errorDescription: String? {
-        switch self {
-        case .goalNotCodable:
-            return String(localized: "The goal is not codable")
-        }
-    }
-}
-
-class FakeErrorGoalsService: GoalsServiceProtocol {
-    private var goals: [Goal] = []
-
-    func setLastActivityDate(_ date: Date) throws {}
-
-    func getLastActivityDate() -> Date? { return nil }
-
-    func clearLastActivityDate() {}
-
-    func getCostPerMonth() -> Double? { return nil }
-
-    func setCostPerMonth(_ cost: Double) {}
-
-    func clearCostPerMonth() {}
-
-    func getAllGoals() -> [Goal] {
-        return goals
-    }
-
-    func addGoal(_ goal: Goal) throws {
-        if goal.name == "Error" {
-            throw FakeGoalsServiceError.goalNotCodable
-        }
-        goals.append(goal)
-    }
-
-    func removeGoal(_ goal: Goal) {}
-
-    func removeAllGoals() {}
-}

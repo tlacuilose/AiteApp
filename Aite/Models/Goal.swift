@@ -12,7 +12,7 @@ enum GoalTarget: Codable, Equatable {
     case money(Double)
 }
 
-struct Goal: Codable, Equatable {
+struct Goal: Identifiable, Codable, Equatable {
     let id: UUID
     let name: String
     let target: GoalTarget

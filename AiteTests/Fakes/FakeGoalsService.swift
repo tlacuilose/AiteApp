@@ -65,7 +65,14 @@ class FakeGoalsService: GoalsServiceProtocol {
         goals.append(goal)
     }
 
-    func removeGoal(_ goal: Goal) {
+    func addGoalDoNotThrow(_ goal: Goal) {
+        goals.append(goal)
+    }
+
+    func removeGoal(_ goal: Goal) throws {
+        if shouldThrow {
+            throw FakeGoalsServiceError.fake
+        }
         goals.removeAll { $0.id == goal.id }
     }
 

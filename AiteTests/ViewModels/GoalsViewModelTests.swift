@@ -61,6 +61,8 @@ import Testing
 
         #expect(viewModel.goals.count == 1)
         #expect(viewModel.goals.first == fakeGoal)
+
+        fakeGoalsService.removeAllGoals()
     }
 
     @Test func addGoal_whenServiceThrows_doesNotAddGoal() {
@@ -71,6 +73,77 @@ import Testing
         #expect(throws: (any Error).self) {
             try viewModel.addGoal(fakeGoal)
         }
+
+        #expect(viewModel.goals.isEmpty)
+
+        fakeGoalsService.clearThrowables()
+    }
+
+    @Test func removeGoal_whenGoalExists_updatesGoals() {
+        fakeGoalsService.removeAllGoals()
+
+        let goalOne = Goal(name: "Goal One", target: .money(100))
+        let goalTwo = Goal(name: "Goal Two", target: .money(200))
+
+        try! viewModel.addGoal(goalOne)
+        try! viewModel.addGoal(goalTwo)
+
+        try! viewModel.removeGoal(goalOne)
+
+        #expect(viewModel.goals.count == 1)
+        #expect(viewModel.goals.first == goalTwo)
+
+        fakeGoalsService.removeAllGoals()
+    }
+
+    @Test func removeGoal_whenGoalIsNotSaved_doesNotUpdateGoals() {
+        fakeGoalsService.removeAllGoals()
+
+        let goalOne = Goal(name: "Goal One", target: .money(100))
+        let goalTwo = Goal(name: "Goal Two", target: .money(200))
+
+        try! viewModel.addGoal(goalOne)
+
+        try! viewModel.removeGoal(goalTwo)
+
+        #expect(viewModel.goals.count == 1)
+
+        fakeGoalsService.removeAllGoals()
+    }
+
+    @Test func removeGoal_whenServiceThrows_doesNotRemoveGoal() {
+        fakeGoalsService.enableThrowables()
+        fakeGoalsService.removeAllGoals()
+
+        let goalOne = Goal(name: "Goal One", target: .money(100))
+        let goalTwo = Goal(name: "Goal Two", target: .money(200))
+
+        fakeGoalsService.addGoalDoNotThrow(goalOne)
+        fakeGoalsService.addGoalDoNotThrow(goalTwo)
+
+        // Using the init to load the goals in the service
+        let vm = GoalsViewModel(goalsService: fakeGoalsService)
+
+        #expect(throws: (any Error).self) {
+            try vm.removeGoal(goalOne)
+        }
+
+        #expect(vm.goals.count == 2)
+
+        fakeGoalsService.clearThrowables()
+        fakeGoalsService.removeAllGoals()
+    }
+
+    @Test func removeAllGoals_whenNotEmpty_emptiesGoals() {
+        fakeGoalsService.removeAllGoals()
+
+        let goalOne = Goal(name: "Goal One", target: .money(100))
+        let goalTwo = Goal(name: "Goal Two", target: .money(200))
+
+        try! viewModel.addGoal(goalOne)
+        try! viewModel.addGoal(goalTwo)
+
+        viewModel.removeAllGoals()
 
         #expect(viewModel.goals.isEmpty)
     }

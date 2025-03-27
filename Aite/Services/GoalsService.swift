@@ -20,7 +20,7 @@ enum TimespaceError: Error, LocalizedError {
 
 enum CodableError: Error, LocalizedError {
     case goalNotCodable
-    
+
     var errorDescription: String? {
         switch self {
         case .goalNotCodable:
@@ -77,23 +77,25 @@ class GoalsService: GoalsServiceProtocol {
     func addGoal(_ goal: Goal) throws {
         var goals = getAllGoals()
         goals.append(goal)
+        try saveGoals(goals)
+    }
+
+    func removeGoal(_ goal: Goal) throws {
+        var goals = getAllGoals()
+        goals.removeAll { $0.id == goal.id }
+        try saveGoals(goals)
+    }
+
+    func removeAllGoals() {
+        defaults.removeObject(forKey: DefaultsKeys.goals)
+    }
+
+    private func saveGoals(_ goals: [Goal]) throws {
         do {
             let encoded = try JSONEncoder().encode(goals)
             defaults.set(encoded, forKey: DefaultsKeys.goals)
         } catch {
             throw CodableError.goalNotCodable
         }
-    }
-
-    func removeGoal(_ goal: Goal) {
-        var goals = getAllGoals()
-        goals.removeAll { $0.id == goal.id }
-        if let encoded = try? JSONEncoder().encode(goals) {
-            defaults.set(encoded, forKey: DefaultsKeys.goals)
-        }
-    }
-
-    func removeAllGoals() {
-        defaults.removeObject(forKey: DefaultsKeys.goals)
     }
 }

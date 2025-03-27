@@ -211,6 +211,16 @@
         }
       }
     },
+    "%lldy %lldm %lldw %lldd" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lldy %2$lldm %3$lldw %4$lldd"
+          }
+        }
+      }
+    },
     "0 Hours" : {
       "localizations" : {
         "es" : {
@@ -257,6 +267,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Costo Por Mes"
+          }
+        }
+      }
+    },
+    "Current Goals" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metas Actuales"
           }
         }
       }
@@ -371,12 +391,32 @@
         }
       }
     },
+    "No goals added yet" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no hay metas"
+          }
+        }
+      }
+    },
     "Ok" : {
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aceptar"
+          }
+        }
+      }
+    },
+    "Remove All" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Borrar Todo"
           }
         }
       }
