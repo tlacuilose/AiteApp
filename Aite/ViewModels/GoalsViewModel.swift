@@ -67,35 +67,7 @@ class GoalsViewModel: ObservableObject {
             return
         }
 
-        let now = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents(
-            [.year, .month, .weekOfMonth, .day, .hour], from: lastActivity, to: now)
-
-        let timeComponents: [(component: Int?, writer: (Int) -> String)] = [
-            (components.year, { (value: Int) -> String in String(localized: "\(value) Year") }),
-            (components.month, { (value: Int) -> String in String(localized: "\(value) Month") }),
-            (
-                components.weekOfMonth,
-                { (value: Int) -> String in String(localized: "\(value) Week") }
-            ),
-            (components.day, { (value: Int) -> String in String(localized: "\(value) Day") }),
-            (components.hour, { (value: Int) -> String in String(localized: "\(value) Hour") }),
-        ]
-
-        let progressParts =
-            timeComponents
-            .compactMap { component, writer -> String? in
-                guard let value = component, value > 0 else { return nil }
-                return writer(value)
-            }
-
-        if progressParts.isEmpty {
-            progress = String(localized: "0 Hours")
-            return
-        }
-
-        progress = progressParts.joined(separator: " ")
+        progress = Utils.timeIntervalToString(from: lastActivity, to: Date())
     }
 
     private func updateSavedAmount() {
@@ -104,13 +76,7 @@ class GoalsViewModel: ObservableObject {
             return
         }
 
-        let now = Date()
-        let timeInterval = now.timeIntervalSince(lastActivity)
-        let daysInMonth = 30.44  // Average days in a month
-        let secondsInMonth = daysInMonth * 24 * 60 * 60
-
-        let monthsPassed = timeInterval / secondsInMonth
-        savedAmount = costPerMonth * monthsPassed
+        savedAmount = Utils.calculateSavedAmount(from: lastActivity, to: Date(), costPerMonth: costPerMonth)
     }
 
 }
