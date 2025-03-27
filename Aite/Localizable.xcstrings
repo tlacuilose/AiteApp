@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "#" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "#"
-          }
-        }
-      }
-    },
     "%lld Day" : {
       "localizations" : {
         "en" : {
@@ -231,16 +221,6 @@
         }
       }
     },
-    "1 Day 2 Hours" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "1 Día 2 Horas"
-          }
-        }
-      }
-    },
     "Add" : {
       "localizations" : {
         "es" : {
@@ -297,16 +277,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fecha"
-          }
-        }
-      }
-    },
-    "Days" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Días"
           }
         }
       }
@@ -387,16 +357,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cantidad"
-          }
-        }
-      }
-    },
-    "Months" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meses"
           }
         }
       }
@@ -517,26 +477,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tiempo"
-          }
-        }
-      }
-    },
-    "Weeks" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Semanas"
-          }
-        }
-      }
-    },
-    "Years" : {
-      "localizations" : {
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Años"
           }
         }
       }

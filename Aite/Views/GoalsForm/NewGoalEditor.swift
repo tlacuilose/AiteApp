@@ -97,8 +97,8 @@ struct NewGoalEditor: View {
                 )
                 .keyboardType(.decimalPad)
             case .timeframe(let days, let weeks, let months, let years):
-                NumberField(
-                    title: "Days",
+                Stepper(
+                    "\(days) Day",
                     value: Binding(
                         get: { days },
                         set: { newDays in
@@ -107,11 +107,12 @@ struct NewGoalEditor: View {
                                 target: .timeframe(
                                     days: newDays, weeks: weeks, months: months,
                                     years: years))
-                        })
+                        }),
+                    in: 0...9000
                 )
 
-                NumberField(
-                    title: "Weeks",
+                Stepper(
+                    "\(weeks) Week",
                     value: Binding(
                         get: { weeks },
                         set: { newWeeks in
@@ -120,11 +121,12 @@ struct NewGoalEditor: View {
                                 target: .timeframe(
                                     days: days, weeks: newWeeks, months: months,
                                     years: years))
-                        })
+                        }),
+                    in: 0...9000
                 )
 
-                NumberField(
-                    title: "Months",
+                Stepper(
+                    "\(months) Month",
                     value: Binding(
                         get: { months },
                         set: { newMonths in
@@ -133,20 +135,22 @@ struct NewGoalEditor: View {
                                 target: .timeframe(
                                     days: days, weeks: weeks, months: newMonths,
                                     years: years))
-                        })
+                        }),
+                    in: 0...9000
                 )
 
-                NumberField(
-                    title: "Years",
+                Stepper(
+                    "\(years) Year",
                     value: Binding(
-                        get: { days },
+                        get: { years },
                         set: { newYears in
                             newGoal = Goal(
                                 name: newGoal.name,
                                 target: .timeframe(
                                     days: days, weeks: weeks, months: months,
                                     years: newYears))
-                        })
+                        }),
+                    in: 0...9000
                 )
             }
         }
@@ -167,4 +171,3 @@ struct NewGoalEditor: View {
             .environmentObject(GoalsViewModel(goalsService: FakeGoalsServiceForUI()))
     }
 }
-
