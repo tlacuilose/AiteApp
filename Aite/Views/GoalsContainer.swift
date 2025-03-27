@@ -19,7 +19,7 @@ struct GoalsContainer: View {
                         savedAmount: vm.savedAmount
                     )
                 } else {
-                    VariablesEditor()
+                    GoalsForm()
                 }
             }
             .navigationTitle("Am I There Ever?")
