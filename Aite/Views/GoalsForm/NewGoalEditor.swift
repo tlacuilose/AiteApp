@@ -31,7 +31,15 @@ struct NewGoalEditor: View {
                             try vm.addGoal(newGoal)
                             withAnimation(Animation.linear(duration: 0.6)) {
                                 bounceTrigger += 1
+                            }
+                            switch newGoal.construction {
+                            case .money:
                                 newGoal = Goal(name: "", target: .money(0))
+                            case .timeframe:
+                                newGoal = Goal(
+                                    name: "",
+                                    target: .timeframe(days: 0, weeks: 0, months: 0, years: 0))
+
                             }
                         } catch {
                             errorMessage = error.localizedDescription
