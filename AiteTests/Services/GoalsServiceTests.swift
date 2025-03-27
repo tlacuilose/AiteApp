@@ -88,7 +88,7 @@ import Testing
         #expect(result.count == 1)
         #expect(result[0].id == goal.id)
         #expect(result[0].name == goal.name)
-        if case .timeframe(let days, _, _, _) = result[0].target {
+        if case .timeframe(let days, _, _, _) = result[0].construction {
             #expect(days == 30)
         }
         fakeDefaults.clearStore()
@@ -102,7 +102,7 @@ import Testing
         #expect(goals.count == 1)
         #expect(goals[0].id == goal.id)
         #expect(goals[0].name == goal.name)
-        if case .timeframe(let days, _, _, _) = goals[0].target {
+        if case .timeframe(let days, _, _, _) = goals[0].construction {
             #expect(days == 30)
         }
         fakeDefaults.clearStore()
@@ -116,7 +116,7 @@ import Testing
         #expect(goals.count == 1)
         #expect(goals[0].id == goal.id)
         #expect(goals[0].name == goal.name)
-        if case .money(let amount) = goals[0].target {
+        if case .money(let amount) = goals[0].construction {
             #expect(amount == 1000.0)
         }
         fakeDefaults.clearStore()
@@ -144,7 +144,7 @@ import Testing
         #expect(goals.count == 1)
         #expect(goals[0].id == goal2.id)
         #expect(goals[0].name == "Savings Goal")
-        if case .money(let amount) = goals[0].target {
+        if case .money(let amount) = goals[0].construction {
             #expect(amount == 500.0)
         }
         fakeDefaults.clearStore()

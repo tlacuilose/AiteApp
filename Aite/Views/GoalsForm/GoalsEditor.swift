@@ -33,22 +33,16 @@ struct GoalsEditor: View {
         ) {
             ForEach(vm.goals) { goal in
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text(goal.name)
-                            .font(.headline)
-
-                        switch goal.target {
-                        case .money(let amount):
-                            Text(
-                                amount,
-                                format: .currency(
-                                    code: Locale.current.currency?.identifier ?? "USD")
-                            )
-                            .font(.subheadline)
-                        case .timeframe(let days, let weeks, let months, let years):
-                            Text("\(years)y \(months)m \(weeks)w \(days)d")
-                                .font(.subheadline)
-                        }
+                    switch goal.construction {
+                    case .money:
+                        GoalDetail(goal: goal, goalReference: .money(from: vm.savedAmount))
+                    case .timeframe:
+                        GoalDetail(
+                            goal: goal,
+                            goalReference: .timeframe(
+                                from: vm.lastActivityDate ?? Date(),
+                                to: Date()
+                            ))
                     }
 
                     Spacer()

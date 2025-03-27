@@ -49,7 +49,7 @@ struct NewGoalEditor: View {
                 "Target Type",
                 selection: Binding(
                     get: {
-                        switch newGoal.target {
+                        switch newGoal.construction {
                         case .money:
                             return EditableTargets.money
                         case .timeframe:
@@ -79,11 +79,11 @@ struct NewGoalEditor: View {
                 text: Binding(
                     get: { newGoal.name },
                     set: {
-                        newGoal = Goal(name: $0, target: newGoal.target)
+                        newGoal = Goal(name: $0, target: newGoal.construction)
                     }
                 ))
 
-            switch newGoal.target {
+            switch newGoal.construction {
             case .money(let amount):
                 TextField(
                     "Target Amount",

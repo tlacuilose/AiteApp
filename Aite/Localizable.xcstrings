@@ -211,12 +211,12 @@
         }
       }
     },
-    "%lldy %lldm %lldw %lldd" : {
+    "%lld%%" : {
       "localizations" : {
-        "en" : {
+        "es" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$lldy %2$lldm %3$lldw %4$lldd"
+            "state" : "translated",
+            "value" : "%lld%%"
           }
         }
       }
@@ -327,6 +327,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error"
+          }
+        }
+      }
+    },
+    "Errored goal" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meta con error"
           }
         }
       }
