@@ -23,10 +23,20 @@ class FakeGoalsServiceForUI: GoalsServiceProtocol {
         Goal(name: "Timeframe Goal", target: .timeframe(days: 0, weeks: 0, months: 2, years: 0)),
         Goal(name: "Error Goal", target: .money(100)),
     ]
+    
+    private var lastActivityDate: Date?
+    
+    init(lastActivityDate: Date? = nil, clearGoals: Bool = false) {
+        self.lastActivityDate = lastActivityDate
+        
+        if clearGoals {
+            goals.removeAll()
+        }
+    }
 
     func setLastActivityDate(_ date: Date) throws {}
 
-    func getLastActivityDate() -> Date? { return nil }
+    func getLastActivityDate() -> Date? { return lastActivityDate }
 
     func clearLastActivityDate() {}
 

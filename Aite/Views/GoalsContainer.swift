@@ -14,10 +14,13 @@ struct GoalsContainer: View {
         NavigationStack {
             VStack {
                 if !editing {
-                    ProgressCounter(
-                        progress: vm.progress,
-                        savedAmount: vm.savedAmount
-                    )
+                    List {
+                        ProgressCounter(
+                            progress: vm.progress,
+                            savedAmount: vm.savedAmount
+                        )
+                        GoalsCollection()
+                    }
                 } else {
                     GoalsForm()
                 }

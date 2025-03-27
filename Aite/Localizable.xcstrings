@@ -231,6 +231,16 @@
         }
       }
     },
+    "1 Day 2 Hours" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Día 2 Horas"
+          }
+        }
+      }
+    },
     "Add" : {
       "localizations" : {
         "es" : {
@@ -351,6 +361,16 @@
         }
       }
     },
+    "Goals" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metas"
+          }
+        }
+      }
+    },
     "Last Activity" : {
       "localizations" : {
         "es" : {
@@ -411,12 +431,32 @@
         }
       }
     },
+    "No goals yet" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin metas"
+          }
+        }
+      }
+    },
     "Ok" : {
       "localizations" : {
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aceptar"
+          }
+        }
+      }
+    },
+    "Please add a last activity date" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añade una fecha desde la última actividad primero"
           }
         }
       }

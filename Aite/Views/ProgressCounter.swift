@@ -11,7 +11,7 @@ struct ProgressCounter: View {
     let savedAmount: Double
 
     var body: some View {
-        List {
+        Section {
             Text(progress)
             Text(
                 savedAmount.formatted(.currency(code: Locale.current.currency?.identifier ?? "USD"))
