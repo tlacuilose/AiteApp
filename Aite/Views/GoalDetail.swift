@@ -13,13 +13,20 @@ struct GoalDetail: View {
     private let goalTarget: GoalTarget?
     private let goalProgress: Double?
 
-    private let gradient = Gradient(colors: [.green, .yellow, .red])
+    private let gradient: Gradient
 
     init(goal: Goal, goalReference: GoalReference) {
         self.goal = goal
         self.goalReference = goalReference
         goalTarget = goal.getTarget(reference: goalReference)
         goalProgress = goal.getProgress(reference: goalReference)
+
+        switch goal.construction {
+        case .money:
+            gradient = Gradient(colors: [.green, .yellow, .red])
+        case .timeframe:
+            gradient = Gradient(colors: [.blue, .pink, .purple])
+        }
     }
 
     var body: some View {
