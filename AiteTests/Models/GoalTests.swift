@@ -248,4 +248,70 @@ struct GoalTests {
         let progress = goal.getProgress(reference: reference)
         #expect(progress == nil)
     }
+
+    @Test
+    func getProgress_whenTimeframeExceeded_returnsMaxProgress() throws {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let startDate = dateFormatter.date(from: "2025-01-01")!
+        let overDate = dateFormatter.date(from: "2025-01-15")!  // 15 days
+
+        let goal = Goal(name: "Complete project", target: .timeframe(days: 10))
+        let reference = GoalReference.timeframe(from: startDate, to: overDate)
+
+        guard let progress = goal.getProgress(reference: reference) else {
+            Issue.record("Progress should not be nil")
+            return
+        }
+
+        // Even though we've gone past the target date, progress should be capped at 100%
+        #expect(progress == 1.0)
+    }
+
+    @Test
+    func getProgress_whenMoneyExceeded_returnsMaxProgress() throws {
+        let goal = Goal(name: "Save money", target: .money(1000.0))
+        let reference = GoalReference.money(from: 1500.0)  // Exceeded target by 500
+
+        guard let progress = goal.getProgress(reference: reference) else {
+            Issue.record("Progress should not be nil")
+            return
+        }
+
+        // Even though we've exceeded the target amount, progress should be capped at 100%
+        #expect(progress == 1.0)
+    }
+
+    @Test
+    func getProgress_whenTimeframeBeforeStart_returnsZeroProgress() throws {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let startDate = dateFormatter.date(from: "2025-01-01")!
+        let beforeDate = dateFormatter.date(from: "2024-12-25")!  // Before start date
+
+        let goal = Goal(name: "Complete project", target: .timeframe(days: 10))
+        let reference = GoalReference.timeframe(from: startDate, to: beforeDate)
+
+        guard let progress = goal.getProgress(reference: reference) else {
+            Issue.record("Progress should not be nil")
+            return
+        }
+
+        // When current date is before start date, progress should be 0%
+        #expect(progress == 0.0)
+    }
+
+    @Test
+    func getProgress_whenMoneyNegative_returnsZeroProgress() throws {
+        let goal = Goal(name: "Save money", target: .money(1000.0))
+        let reference = GoalReference.money(from: -500.0)  // Negative amount
+
+        guard let progress = goal.getProgress(reference: reference) else {
+            Issue.record("Progress should not be nil")
+            return
+        }
+
+        // When current amount is negative, progress should be 0%
+        #expect(progress == 0.0)
+    }
 }

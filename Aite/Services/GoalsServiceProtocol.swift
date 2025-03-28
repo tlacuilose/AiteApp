@@ -11,7 +11,7 @@ protocol GoalsServiceProtocol {
     func getLastActivityDate() -> Date?
     func setLastActivityDate(_ date: Date) throws
     func getCostPerMonth() -> Double?
-    func setCostPerMonth(_ cost: Double)
+    func setCostPerMonth(_ cost: Double) throws
     func getAllGoals() -> [Goal]
     func addGoal(_ goal: Goal) throws
     func removeGoal(_ goal: Goal) throws

@@ -9,6 +9,9 @@ import SwiftUI
 struct VariablesEditor: View {
     @EnvironmentObject var vm: GoalsViewModel
 
+    @State private var errorMessage: String? = nil
+    @State private var didErrored = false
+
     var body: some View {
         Section("Last Activity") {
             DatePicker(
@@ -26,11 +29,30 @@ struct VariablesEditor: View {
         }
         Section("Cost Per Month") {
             TextField(
-                "Amount", value: $vm.costPerMonth,
+                "Amount",
+                value: Binding(
+                    get: { vm.costPerMonth },
+                    set: { newCost in
+                        do {
+                            try vm.updateCostPerMonth(newCost)
+                        } catch {
+                            errorMessage = error.localizedDescription
+                            didErrored = true
+                        }
+                    }
+                ),
                 format: .currency(code: Locale.current.currency?.identifier ?? "USD")
             )
             .keyboardType(.decimalPad)
         }
+        .alert(
+            "Error", isPresented: $didErrored,
+            actions: {
+                Button("Ok", role: .cancel) {}
+            },
+            message: {
+                Text(errorMessage ?? "Unknown error")
+            })
     }
 }
 

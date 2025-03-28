@@ -10,7 +10,8 @@ import Testing
 
 @testable import Aite
 
-@Suite struct GoalsServiceTests {
+@Suite
+struct GoalsServiceTests {
     let fakeDefaults = FakeUserDefaults()
     let goalsService: GoalsService
 
@@ -18,7 +19,8 @@ import Testing
         goalsService = GoalsService(defaults: fakeDefaults)
     }
 
-    @Test func getLastActivityDate_whenValueExists_returnsDate() {
+    @Test
+    func getLastActivityDate_whenValueExists_returnsDate() {
         let now = Date()
         fakeDefaults.set(now, forKey: GoalsService.DefaultsKeys.lastActivityDate)
 
@@ -27,12 +29,14 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func getLastActivityDate_whenNoValueExists_returnsNil() {
+    @Test
+    func getLastActivityDate_whenNoValueExists_returnsNil() {
         let result = goalsService.getLastActivityDate()
         #expect(result == nil)
     }
 
-    @Test func setLastActivityDate_setsDateInDefaults() {
+    @Test
+    func setLastActivityDate_setsDateInDefaults() {
         let now = Date()
         try! goalsService.setLastActivityDate(now)
 
@@ -42,7 +46,8 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func setLastActivityDate_throwsError_whenSettingAFutureDate() {
+    @Test
+    func setLastActivityDate_whenSettingAFutureDate_throwsError() {
         let oneHourFromNow = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
 
         #expect(throws: TimespaceError.self) {
@@ -50,12 +55,14 @@ import Testing
         }
     }
 
-    @Test func getCostPerMonth_whenNoValueExists_returnsNil() {
+    @Test
+    func getCostPerMonth_whenNoValueExists_returnsNil() {
         let result = goalsService.getCostPerMonth()
         #expect(result == nil)
     }
 
-    @Test func getCostPerMonth_whenValueExists_returnsValue() {
+    @Test
+    func getCostPerMonth_whenValueExists_returnsValue() {
         let cost = 100.0
         fakeDefaults.set(cost, forKey: GoalsService.DefaultsKeys.costPerMonth)
 
@@ -64,21 +71,31 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func setCostPerMonth_setsCostInDefaults() {
+    @Test
+    func setCostPerMonth_setsCostInDefaults() {
         let cost = 150.0
-        goalsService.setCostPerMonth(cost)
+        try! goalsService.setCostPerMonth(cost)
 
         let stored = fakeDefaults.object(forKey: GoalsService.DefaultsKeys.costPerMonth) as? Double
         #expect(stored == cost)
         fakeDefaults.clearStore()
     }
 
-    @Test func getAllGoals_whenNoGoalsExist_returnsEmptyArray() {
+    @Test
+    func setCostPerMonth_whenIsNegative_throwsError() {
+        #expect(throws: TimespaceError.self) {
+            try goalsService.setCostPerMonth(-100.0)
+        }
+    }
+
+    @Test
+    func getAllGoals_whenNoGoalsExist_returnsEmptyArray() {
         let goals = goalsService.getAllGoals()
         #expect(goals.isEmpty)
     }
 
-    @Test func getAllGoals_whenGoalsExist_returnsGoals() {
+    @Test
+    func getAllGoals_whenGoalsExist_returnsGoals() {
         let goal = Goal(name: "Test Goal", target: .timeframe(days: 30))
         let goals = [goal]
         let encoded = try? JSONEncoder().encode(goals)
@@ -94,7 +111,8 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func addGoal_addsTimeframeGoalToDefaults() {
+    @Test
+    func addGoal_addsTimeframeGoalToDefaults() {
         let goal = Goal(name: "Exercise Goal", target: .timeframe(days: 30))
         try! goalsService.addGoal(goal)
 
@@ -108,7 +126,8 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func addGoal_addsMoneyGoalToDefaults() {
+    @Test
+    func addGoal_addsMoneyGoalToDefaults() {
         let goal = Goal(name: "Savings Goal", target: .money(1000.0))
         try! goalsService.addGoal(goal)
 
@@ -122,7 +141,27 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func removeGoal_removesGoalFromDefaults() {
+    @Test func addGoal_whenAmountNegative_throwsError() {
+        goalsService.removeAllGoals()
+
+        let moneyGoal = Goal(name: "Money goal", target: .money(-100))
+        #expect(throws: TimespaceError.negativeValue) {
+            try goalsService.addGoal(moneyGoal)
+        }
+
+        let timeframeGoal = Goal(
+            name: "Time goal",
+            target: .timeframe(days: -1, weeks: -2, months: -3, years: -4)
+        )
+        #expect(throws: TimespaceError.negativeValue) {
+            try goalsService.addGoal(timeframeGoal)
+        }
+
+        #expect(goalsService.getAllGoals().isEmpty)
+    }
+
+    @Test
+    func removeGoal_removesGoalFromDefaults() {
         let goal = Goal(name: "Exercise Goal", target: .timeframe(weeks: 4))
         try! goalsService.addGoal(goal)
 
@@ -132,7 +171,8 @@ import Testing
         #expect(goals.isEmpty)
     }
 
-    @Test func removeGoal_whenMultipleGoals_removesOnlySpecifiedGoal() {
+    @Test
+    func removeGoal_whenMultipleGoals_removesOnlySpecifiedGoal() {
         let goal1 = Goal(name: "Exercise Goal", target: .timeframe(weeks: 4))
         let goal2 = Goal(name: "Savings Goal", target: .money(500.0))
         try! goalsService.addGoal(goal1)
@@ -150,7 +190,8 @@ import Testing
         fakeDefaults.clearStore()
     }
 
-    @Test func removeAllGoals_removesAllGoalsFromDefaults() {
+    @Test
+    func removeAllGoals_removesAllGoalsFromDefaults() {
         let goal1 = Goal(name: "Exercise Goal", target: .timeframe(months: 3))
         let goal2 = Goal(name: "Savings Goal", target: .money(2000.0))
         try! goalsService.addGoal(goal1)

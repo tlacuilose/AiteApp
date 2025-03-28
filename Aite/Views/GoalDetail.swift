@@ -14,6 +14,7 @@ struct GoalDetail: View {
     private let goalProgress: Double?
 
     private let gradient: Gradient
+    private let linearGradient: LinearGradient
 
     init(goal: Goal, goalReference: GoalReference) {
         self.goal = goal
@@ -27,20 +28,22 @@ struct GoalDetail: View {
         case .timeframe:
             gradient = Gradient(colors: [.blue, .pink, .purple])
         }
+
+        linearGradient = LinearGradient(
+            gradient: gradient, startPoint: .leading, endPoint: .trailing)
     }
 
     var body: some View {
         HStack {
             if let progress = goalProgress {
                 Gauge(value: progress) {
-                    Text("\(Int(progress * 100))%")
-                        .foregroundStyle(
-                            LinearGradient(
-                                gradient: gradient,
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
+                    if progress == 1.0 {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(linearGradient)
+                    } else {
+                        Text("\(Int(progress * 100))%")
+                            .foregroundStyle(linearGradient)
+                    }
                 }
                 .gaugeStyle(.accessoryCircularCapacity)
                 .tint(gradient)

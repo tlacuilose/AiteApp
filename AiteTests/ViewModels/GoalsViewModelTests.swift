@@ -11,7 +11,8 @@ import Testing
 
 @testable import Aite
 
-@Suite struct GoalsViewModelTests {
+@Suite
+struct GoalsViewModelTests {
     let fakeGoalsService = FakeGoalsService()
     let viewModel: GoalsViewModel
     let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
@@ -25,7 +26,8 @@ import Testing
         viewModel = GoalsViewModel(goalsService: fakeGoalsService)
     }
 
-    @Test func init_whenNoDefaultsProvided_returnsNils() {
+    @Test
+    func init_whenNoDefaultsProvided_returnsNils() {
         let fakeGoalsService = FakeGoalsService()
         fakeGoalsService.clearLastActivityDate()
         fakeGoalsService.clearCostPerMonth()
@@ -37,14 +39,15 @@ import Testing
         #expect(viewModel.progress == String(localized: "No activity recorded"))
     }
 
-    @Test func init_whenDefaultsProvided_returnsDefaults() {
+    @Test
+    func init_whenDefaultsProvided_returnsDefaults() {
         let fakeGoalsService = FakeGoalsService()
         let fakeGoal = Goal(name: "Test Goal", target: .money(100))
         let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: Date())!
         let costPerMonth = 100.0
 
         try! fakeGoalsService.setLastActivityDate(oneMonthAgo)
-        fakeGoalsService.setCostPerMonth(costPerMonth)
+        try! fakeGoalsService.setCostPerMonth(costPerMonth)
         try! fakeGoalsService.addGoal(fakeGoal)
 
         let viewModel = GoalsViewModel(goalsService: fakeGoalsService)
@@ -58,7 +61,8 @@ import Testing
         #expect(viewModel.savedAmount / costPerMonth < 1.10)
     }
 
-    @Test func loadData_whenDataChanges_refreshes() {
+    @Test
+    func loadData_whenDataChanges_refreshes() {
         let pastLastActivityDate = fakeGoalsService.getLastActivityDate()
 
         try! fakeGoalsService.setLastActivityDate(Date())
@@ -70,7 +74,8 @@ import Testing
         try! fakeGoalsService.setLastActivityDate(pastLastActivityDate!)
     }
 
-    @Test func updateLastActivityDate_whenInThePast_updatesActivityAndProgress() {
+    @Test
+    func updateLastActivityDate_whenInThePast_updatesActivityAndProgress() {
         let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
         try! viewModel.updateLastActivityDate(twoDaysAgo)
 
@@ -78,8 +83,8 @@ import Testing
         #expect(viewModel.progress == "2 Days")
     }
 
-    @Test func updateLastActivityDate_whenInTheFuture_throws() {
-        // The service has the responsability on why it failed, that is tested there
+    @Test
+    func updateLastActivityDate_whenUpdateThrows_throws() {
         fakeGoalsService.enableThrowables()
 
         let oneDayFromNow = Calendar.current.date(byAdding: .day, value: 1, to: Date())!
@@ -90,15 +95,29 @@ import Testing
         fakeGoalsService.clearThrowables()
     }
 
-    @Test func didSetCostPerMonth_whenCalled_updatesCost() {
+    @Test
+    func updateCostPerMonth_whenPositive_updatesCostAndSavedAmount() {
         let amount = 100.0
-        viewModel.costPerMonth = amount
+        try! viewModel.updateCostPerMonth(amount)
 
         #expect(fakeGoalsService.getCostPerMonth() == amount)
         #expect(viewModel.savedAmount / amount > 0.90)
     }
 
-    @Test func addGoal_whenValidGoal_updatesGoals() {
+    @Test
+    func updateCostPerMonth_whenUpdateThros_throws() {
+        fakeGoalsService.enableThrowables()
+        let amount = -100.0
+
+        #expect(throws: (any Error).self) {
+            try viewModel.updateCostPerMonth(amount)
+        }
+
+        fakeGoalsService.clearThrowables()
+    }
+
+    @Test
+    func addGoal_whenValidGoal_updatesGoals() {
         fakeGoalsService.removeAllGoals()
 
         let fakeGoal = Goal(name: "Test Goal", target: .money(100))
@@ -110,7 +129,8 @@ import Testing
         fakeGoalsService.removeAllGoals()
     }
 
-    @Test func addGoal_whenServiceThrows_doesNotAddGoal() {
+    @Test
+    func addGoal_whenServiceThrows_doesNotAddGoal() {
         fakeGoalsService.enableThrowables()
         fakeGoalsService.removeAllGoals()
 
@@ -124,7 +144,8 @@ import Testing
         fakeGoalsService.clearThrowables()
     }
 
-    @Test func removeGoal_whenGoalExists_updatesGoals() {
+    @Test
+    func removeGoal_whenGoalExists_updatesGoals() {
         fakeGoalsService.removeAllGoals()
 
         let goalOne = Goal(name: "Goal One", target: .money(100))
@@ -141,7 +162,8 @@ import Testing
         fakeGoalsService.removeAllGoals()
     }
 
-    @Test func removeGoal_whenGoalIsNotSaved_doesNotUpdateGoals() {
+    @Test
+    func removeGoal_whenGoalIsNotSaved_doesNotUpdateGoals() {
         fakeGoalsService.removeAllGoals()
 
         let goalOne = Goal(name: "Goal One", target: .money(100))
@@ -156,7 +178,8 @@ import Testing
         fakeGoalsService.removeAllGoals()
     }
 
-    @Test func removeGoal_whenServiceThrows_doesNotRemoveGoal() {
+    @Test
+    func removeGoal_whenServiceThrows_doesNotRemoveGoal() {
         fakeGoalsService.enableThrowables()
         fakeGoalsService.removeAllGoals()
 
@@ -179,7 +202,8 @@ import Testing
         fakeGoalsService.removeAllGoals()
     }
 
-    @Test func removeAllGoals_whenNotEmpty_emptiesGoals() {
+    @Test
+    func removeAllGoals_whenNotEmpty_emptiesGoals() {
         fakeGoalsService.removeAllGoals()
 
         let goalOne = Goal(name: "Goal One", target: .money(100))

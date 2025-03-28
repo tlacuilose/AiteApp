@@ -10,14 +10,17 @@ import Testing
 
 @testable import Aite
 
-@Suite struct UtilsTests {
-    @Test func calculateSavedAmount_whenSameDate_returnsZero() {
+@Suite
+struct UtilsTests {
+    @Test
+    func calculateSavedAmount_whenSameDate_returnsZero() {
         let now = Date()
         let result = Utils.calculateSavedAmount(from: now, to: now, costPerMonth: 100.0)
         #expect(result == 0.0)
     }
 
-    @Test func calculateSavedAmount_whenOneMonthApart_returnsCostPerMonth() {
+    @Test
+    func calculateSavedAmount_whenOneMonthApart_returnsCostPerMonth() {
         let now = Date()
         let oneMonthAgo = Calendar.current.date(byAdding: .month, value: -1, to: now)!
         let costPerMonth = 100.0
@@ -28,7 +31,8 @@ import Testing
         #expect(result / costPerMonth < 1.10)
     }
 
-    @Test func calculateSavedAmount_whenTwoMonthsApart_returnsDoubleCostPerMonth() {
+    @Test
+    func calculateSavedAmount_whenTwoMonthsApart_returnsDoubleCostPerMonth() {
         let now = Date()
         let twoMonthsAgo = Calendar.current.date(byAdding: .month, value: -2, to: now)!
         let costPerMonth = 100.0
@@ -39,20 +43,23 @@ import Testing
         #expect(result / (costPerMonth * 2) < 1.10)
     }
 
-    @Test func timeIntervalToString_whenCurrentDate_returnsZeroHours() {
+    @Test
+    func timeIntervalToString_whenCurrentDate_returnsZeroHours() {
         let now = Date()
         let result = Utils.timeIntervalToString(from: now, to: now)
         #expect(result == "0 Hours")
     }
 
-    @Test func timeIntervalToString_when1HourAgo_returnsHour() {
+    @Test
+    func timeIntervalToString_when1HourAgo_returnsHour() {
         let now = Date()
         let oneHourAgo = Calendar.current.date(byAdding: .hour, value: -1, to: now)!
         let result = Utils.timeIntervalToString(from: oneHourAgo, to: now)
         #expect(result == "1 Hour")
     }
 
-    @Test func timeIntervalToString_when2HoursAgo_returnsHours() {
+    @Test
+    func timeIntervalToString_when2HoursAgo_returnsHours() {
         let now = Date()
         let twoHoursAgo = Calendar.current.date(byAdding: .hour, value: -2, to: now)!
         let result = Utils.timeIntervalToString(from: twoHoursAgo, to: now)

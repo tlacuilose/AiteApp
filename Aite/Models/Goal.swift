@@ -63,11 +63,11 @@ struct Goal: Identifiable, Codable, Equatable {
                 let totalTimeInterval = targetDate.timeIntervalSince(from)
                 let currentTimeInterval = to.timeIntervalSince(from)
 
-                return (currentTimeInterval / totalTimeInterval)
+                return min(1.0, max(0.0, (currentTimeInterval / totalTimeInterval)))
             }
             return nil
         case (.money(let goal), .money(let current)):
-            return (current / goal)
+            return min(1.0, max(0.0, (current / goal)))
         default:
             return nil
         }

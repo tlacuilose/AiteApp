@@ -38,7 +38,10 @@ class FakeGoalsService: GoalsServiceProtocol {
         return costPerMonth
     }
 
-    func setCostPerMonth(_ cost: Double) {
+    func setCostPerMonth(_ cost: Double) throws {
+        if shouldThrow {
+            throw FakeGoalsServiceError.fake
+        }
         costPerMonth = cost
     }
 

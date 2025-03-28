@@ -9,11 +9,14 @@ import Foundation
 
 enum TimespaceError: Error, LocalizedError {
     case futureActivity
+    case negativeValue
 
     var errorDescription: String? {
         switch self {
         case .futureActivity:
             return String(localized: "The activity date can't be in the future")
+        case .negativeValue:
+            return String(localized: "The cost cannot be negative")
         }
     }
 }
@@ -61,7 +64,10 @@ class GoalsService: GoalsServiceProtocol {
         return defaults.object(forKey: DefaultsKeys.costPerMonth) as? Double
     }
 
-    func setCostPerMonth(_ cost: Double) {
+    func setCostPerMonth(_ cost: Double) throws {
+        if cost < 0 {
+            throw TimespaceError.negativeValue
+        }
         defaults.set(cost, forKey: DefaultsKeys.costPerMonth)
     }
 
@@ -75,6 +81,17 @@ class GoalsService: GoalsServiceProtocol {
     }
 
     func addGoal(_ goal: Goal) throws {
+        switch goal.construction {
+        case .money(let amount):
+            if amount < 0 {
+                throw TimespaceError.negativeValue
+            }
+        case .timeframe(let days, let weeks, let months, let years):
+            if days < 0 || weeks < 0 || months < 0 || years < 0 {
+                throw TimespaceError.negativeValue
+            }
+        }
+
         var goals = getAllGoals()
         goals.append(goal)
         try saveGoals(goals)

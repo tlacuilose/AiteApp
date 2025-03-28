@@ -461,6 +461,16 @@
         }
       }
     },
+    "The cost cannot be negative" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El costo no puede ser negativo"
+          }
+        }
+      }
+    },
     "The goal is not codable" : {
       "localizations" : {
         "es" : {

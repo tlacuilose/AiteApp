@@ -9,21 +9,20 @@ import Foundation
 class GoalsViewModel: ObservableObject {
     private let goalsService: GoalsServiceProtocol
 
-    @Published var lastActivityDate: Date? {
+    @Published private(set) var lastActivityDate: Date? {
         didSet {
             updateProgress()
             updateSavedAmount()
         }
     }
-    @Published var costPerMonth: Double = 0.0 {
+    @Published private(set) var costPerMonth: Double = 0.0 {
         didSet {
-            goalsService.setCostPerMonth(costPerMonth)
             updateSavedAmount()
         }
     }
-    @Published var progress: String = ""
-    @Published var savedAmount: Double = 0.0
-    @Published var goals: [Goal] = []
+    @Published private(set) var progress: String = ""
+    @Published private(set) var savedAmount: Double = 0.0
+    @Published private(set) var goals: [Goal] = []
 
     init(goalsService: GoalsServiceProtocol = GoalsService.shared) {
         self.goalsService = goalsService
@@ -41,6 +40,12 @@ class GoalsViewModel: ObservableObject {
         try goalsService.setLastActivityDate(date)
 
         lastActivityDate = date
+    }
+
+    func updateCostPerMonth(_ cost: Double) throws {
+        try goalsService.setCostPerMonth(cost)
+
+        costPerMonth = cost
     }
 
     func addGoal(_ goal: Goal) throws {
