@@ -31,6 +31,12 @@ class GoalsViewModel: ObservableObject {
         loadData()
     }
 
+    func loadData() {
+        lastActivityDate = goalsService.getLastActivityDate()
+        costPerMonth = goalsService.getCostPerMonth() ?? 0.0
+        goals = goalsService.getAllGoals()
+    }
+
     func updateLastActivityDate(_ date: Date) throws {
         try goalsService.setLastActivityDate(date)
 
@@ -55,12 +61,6 @@ class GoalsViewModel: ObservableObject {
         loadData()
     }
 
-    private func loadData() {
-        lastActivityDate = goalsService.getLastActivityDate()
-        costPerMonth = goalsService.getCostPerMonth() ?? 0.0
-        goals = goalsService.getAllGoals()
-    }
-
     private func updateProgress() {
         guard let lastActivity = lastActivityDate else {
             progress = String(localized: "No activity recorded")
@@ -76,7 +76,8 @@ class GoalsViewModel: ObservableObject {
             return
         }
 
-        savedAmount = Utils.calculateSavedAmount(from: lastActivity, to: Date(), costPerMonth: costPerMonth)
+        savedAmount = Utils.calculateSavedAmount(
+            from: lastActivity, to: Date(), costPerMonth: costPerMonth)
     }
 
 }

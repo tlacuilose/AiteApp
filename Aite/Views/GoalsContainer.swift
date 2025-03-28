@@ -21,6 +21,9 @@ struct GoalsContainer: View {
                         )
                         GoalsCollection()
                     }
+                    .refreshable {
+                        vm.loadData()
+                    }
                 } else {
                     GoalsForm()
                 }

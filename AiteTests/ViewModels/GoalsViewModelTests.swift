@@ -58,6 +58,18 @@ import Testing
         #expect(viewModel.savedAmount / costPerMonth < 1.10)
     }
 
+    @Test func loadData_whenDataChanges_refreshes() {
+        let pastLastActivityDate = fakeGoalsService.getLastActivityDate()
+
+        try! fakeGoalsService.setLastActivityDate(Date())
+
+        viewModel.loadData()
+
+        #expect(viewModel.lastActivityDate != pastLastActivityDate)
+
+        try! fakeGoalsService.setLastActivityDate(pastLastActivityDate!)
+    }
+
     @Test func updateLastActivityDate_whenInThePast_updatesActivityAndProgress() {
         let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
         try! viewModel.updateLastActivityDate(twoDaysAgo)
