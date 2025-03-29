@@ -66,6 +66,12 @@ class GoalsViewModel: ObservableObject {
         loadData()
     }
 
+    func moveGoals(from: IndexSet, to: Int) throws {
+        try goalsService.moveGoals(from: from, to: to)
+
+        loadData()
+    }
+
     private func updateProgress() {
         guard let lastActivity = lastActivityDate else {
             progress = String(localized: "No activity recorded")

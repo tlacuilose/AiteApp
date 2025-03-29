@@ -26,13 +26,13 @@ struct GoalsCollection: View {
                     }
                 } else {
                     Text("No goals yet")
-                        .foregroundColor(.secondary)
+                        .foregroundStyle(.secondary)
                         .italic()
                 }
             }
         } else {
             Text("Please add a last activity date")
-                .foregroundColor(.secondary)
+                .foregroundStyle(.secondary)
                 .italic()
         }
     }

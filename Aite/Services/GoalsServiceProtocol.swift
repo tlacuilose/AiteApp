@@ -16,4 +16,5 @@ protocol GoalsServiceProtocol {
     func addGoal(_ goal: Goal) throws
     func removeGoal(_ goal: Goal) throws
     func removeAllGoals()
+    func moveGoals(from: IndexSet, to: Int) throws
 }

@@ -82,4 +82,11 @@ class FakeGoalsService: GoalsServiceProtocol {
     func removeAllGoals() {
         goals.removeAll()
     }
+
+    func moveGoals(from: IndexSet, to: Int) throws {
+        if shouldThrow {
+            throw FakeGoalsServiceError.fake
+        }
+        goals.move(fromOffsets: from, toOffset: to)
+    }
 }

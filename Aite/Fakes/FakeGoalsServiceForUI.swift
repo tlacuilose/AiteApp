@@ -75,4 +75,8 @@ class FakeGoalsServiceForUI: GoalsServiceProtocol {
     func removeAllGoals() {
         goals.removeAll()
     }
+
+    func moveGoals(from: IndexSet, to: Int) throws {
+        goals.move(fromOffsets: from, toOffset: to)
+    }
 }

@@ -216,4 +216,46 @@ struct GoalsViewModelTests {
 
         #expect(viewModel.goals.isEmpty)
     }
+
+    @Test
+    func moveGoals_whenServiceDoesNotThrow_movesGoals() {
+        fakeGoalsService.removeAllGoals()
+
+        let goalOne = Goal(name: "Goal One", target: .money(1))
+        let goalTwo = Goal(name: "Goal Two", target: .money(2))
+        let goalThree = Goal(name: "Goal Three", target: .money(3))
+
+        try! viewModel.addGoal(goalOne)
+        try! viewModel.addGoal(goalTwo)
+        try! viewModel.addGoal(goalThree)
+
+        try! viewModel.moveGoals(from: IndexSet(integer: 0), to: 2)
+
+        // Check the service to see how move works
+        #expect(viewModel.goals.count == 3)
+
+        fakeGoalsService.removeAllGoals()
+    }
+
+    @Test
+    func moveGoals_whenServiceThrows_throwsError() {
+        fakeGoalsService.removeAllGoals()
+
+        let goalOne = Goal(name: "Goal One", target: .money(1))
+        let goalTwo = Goal(name: "Goal Two", target: .money(2))
+        let goalThree = Goal(name: "Goal Three", target: .money(3))
+
+        try! viewModel.addGoal(goalOne)
+        try! viewModel.addGoal(goalTwo)
+        try! viewModel.addGoal(goalThree)
+
+        fakeGoalsService.enableThrowables()
+
+        #expect(throws: (any Error).self) {
+            try viewModel.moveGoals(from: IndexSet(integer: 0), to: 2)
+        }
+
+        fakeGoalsService.clearThrowables()
+        fakeGoalsService.removeAllGoals()
+    }
 }

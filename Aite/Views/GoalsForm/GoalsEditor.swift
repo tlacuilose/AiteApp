@@ -33,6 +33,9 @@ struct GoalsEditor: View {
         ) {
             ForEach(vm.goals) { goal in
                 HStack {
+                    Image(systemName: "line.3.horizontal")
+                        .foregroundStyle(.gray)
+                    
                     switch goal.construction {
                     case .money:
                         GoalDetail(goal: goal, goalReference: .money(from: vm.savedAmount))
@@ -56,14 +59,23 @@ struct GoalsEditor: View {
                         }
                     }) {
                         Image(systemName: "trash")
-                            .foregroundColor(.red)
+                            .foregroundStyle(.red)
                     }
+                    .buttonStyle(.borderless)
+                }
+            }
+            .onMove { from, to in
+                do {
+                    try vm.moveGoals(from: from, to: to)
+                } catch {
+                    errorMessage = error.localizedDescription
+                    didErrored = true
                 }
             }
 
             if vm.goals.isEmpty {
                 Text("No goals added yet")
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
                     .italic()
             }
         }

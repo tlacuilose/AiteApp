@@ -202,4 +202,35 @@ struct GoalsServiceTests {
         let goals = goalsService.getAllGoals()
         #expect(goals.isEmpty)
     }
+
+    @Test
+    func moveGoals_whenCanBeSaved_moveGoals() {
+        let goalOne = Goal(name: "First Goal", target: .money(1))
+        let goalTwo = Goal(name: "Second Goal", target: .money(2))
+        let goalThree = Goal(name: "Third Goal", target: .money(3))
+        let goalFour = Goal(name: "Four Goal", target: .money(4))
+
+        try! goalsService.addGoal(goalOne)
+        try! goalsService.addGoal(goalTwo)
+        try! goalsService.addGoal(goalThree)
+        try! goalsService.addGoal(goalFour)
+
+        try! goalsService.moveGoals(from: IndexSet(integer: 0), to: 2)
+
+        // 1. Remove the element at index 0 (goalOne):
+        //    Array becomes: [goalTwo, goalThree, goalFour]
+        // 2. The 'toOffset' parameter (1 in this case) is interpreted as an index in the final array
+        //    after the removal. Because the removal shifts the array, the effective insertion index
+        //    is computed as: 1 - 1 (since the source index 0 is less than the destination) = 0.
+        // 3. Thus, goalOne is reinserted at index 0:
+        //    Final array becomes: [goalOne, goalTwo, goalThree, goalFour]
+
+        let goals = goalsService.getAllGoals()
+
+        #expect(goals[0].id == goalTwo.id)
+        #expect(goals[1].id == goalOne.id)
+        #expect(goals[2].id == goalThree.id)
+        #expect(goals[3].id == goalFour.id)
+
+    }
 }

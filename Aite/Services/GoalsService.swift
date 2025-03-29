@@ -107,6 +107,13 @@ class GoalsService: GoalsServiceProtocol {
         defaults.removeObject(forKey: DefaultsKeys.goals)
     }
 
+    func moveGoals(from: IndexSet, to: Int) throws {
+        var goals = getAllGoals()
+        goals.move(fromOffsets: from, toOffset: to)
+
+        try saveGoals(goals)
+    }
+
     private func saveGoals(_ goals: [Goal]) throws {
         do {
             let encoded = try JSONEncoder().encode(goals)
